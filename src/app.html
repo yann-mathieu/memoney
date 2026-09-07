@@ -1,190 +1,259 @@
 <title>Me Money</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Luckiest+Guy&family=Nunito:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
   :root{
-    --sea:#DDF0F2;
-    --surface:#FFF9EE;
-    --surface-2:#F7EBD6;
-    --ink:#123340;
-    --ink-soft:#4E6C78;
-    --ink-faint:#84A0A9;
-    --line:#E2D0AF;
-    --line-strong:#C7AC81;
-    --krabs:#D6392C;
-    --krabs-ink:#AF291E;
-    --gold:#C98A0B;
-    --gold-bright:#F0B429;
-    --gold-soft:#FCF0D5;
-    --gold-line:#E5C57C;
-    --settled:#0E7C90;
-    --settled-soft:#D8EEF1;
-    --settled-line:#96CCD6;
-    --focus:#0E7C90;
-    --bubble:rgba(14,124,144,.13);
-    --shadow:0 2px 0 var(--line-strong), 0 10px 24px -18px rgba(18,51,64,.7);
+    /* --- Bikini Bottom, daytime --- */
+    --water-top:#C6EEF4;
+    --water-bot:#79CFDF;
+    --sand:#F2DFAE;
+    --sand-deep:#DCC086;
+    --kelp:#2F8A63;
+    --coral:#F2837B;
+    --jelly:#F49AC1;
+    --surface:#FFF8E7;
+    --surface-2:#F7EACF;
+    --ink:#12313E;
+    --ink-soft:#456A78;
+    --ink-faint:#7C9AA6;
+    --outline:#12313E;
+    --line:#D9C193;
+    --line-strong:#BE9E63;
+    --krabs:#E24234;
+    --krabs-ink:#B92E22;
+    --sun:#F7D14C;
+    --gold:#B87A0B;
+    --gold-soft:#FBEFCF;
+    --gold-line:#E0BE6E;
+    --settled:#0E8CA0;
+    --settled-soft:#D6EEF2;
+    --settled-line:#8FCBD7;
+    --plank:#C98B4B;
+    --plaque-ink:#12313E;
+    --plaque-ink-soft:#6B5A34;
+    --deep:#0B3A4C;      /* the money board — same in both themes */
+    --deep-2:#0F4E64;
+    --focus:#0E8CA0;
+    --bubble:rgba(255,255,255,.55);
+    --hard:3px;
     --poster:"Luckiest Guy", "Trebuchet MS", Verdana, sans-serif;
     --body:"Nunito", system-ui, -apple-system, sans-serif;
     --receipt:"Courier Prime", ui-monospace, Menlo, monospace;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --sea:#062029;
-      --surface:#0E3341;
-      --surface-2:#154150;
-      --ink:#EAF4F3;
-      --ink-soft:#A6C2CB;
-      --ink-faint:#6E8F9B;
-      --line:#26505E;
-      --line-strong:#356A79;
-      --krabs:#F0574A;
-      --krabs-ink:#FF7264;
-      --gold:#F5C044;
-      --gold-bright:#FFD469;
-      --gold-soft:#3A2D11;
-      --gold-line:#6E5623;
-      --settled:#57C6D6;
-      --settled-soft:#0E3B45;
-      --settled-line:#2C6B78;
-      --focus:#57C6D6;
-      --bubble:rgba(146,214,224,.22);
-      --shadow:0 2px 0 rgba(0,0,0,.35), 0 12px 28px -20px #000;
+      --water-top:#0A2836;
+      --water-bot:#04161F;
+      --sand:#4B3F27;
+      --sand-deep:#3A311C;
+      --kelp:#1D5B44;
+      --coral:#A85B57;
+      --jelly:#A05C7C;
+      --surface:#103340;
+      --surface-2:#17414F;
+      --ink:#E8F5F7;
+      --ink-soft:#A8C6CE;
+      --ink-faint:#728F9B;
+      --outline:#03141C;
+      --line:#27505E;
+      --line-strong:#3B6D7C;
+      --krabs:#F2564A;
+      --krabs-ink:#FF6E62;
+      --sun:#FFD95E;
+      --gold:#F3BE4B;
+      --gold-soft:#3B2E12;
+      --gold-line:#6F5623;
+      --settled:#53C6D6;
+      --settled-soft:#0E3C46;
+      --settled-line:#2D6C79;
+      --plank:#7A5330;
+      --plaque-ink:#FFEFC7;
+      --plaque-ink-soft:#C4AE7E;
+      --focus:#53C6D6;
+      --bubble:rgba(150,220,230,.20);
     }
   }
   :root[data-theme="dark"]{
-    --sea:#062029;
-    --surface:#0E3341;
-    --surface-2:#154150;
-    --ink:#EAF4F3;
-    --ink-soft:#A6C2CB;
-    --ink-faint:#6E8F9B;
-    --line:#26505E;
-    --line-strong:#356A79;
-    --krabs:#F0574A;
-    --krabs-ink:#FF7264;
-    --gold:#F5C044;
-    --gold-bright:#FFD469;
-    --gold-soft:#3A2D11;
-    --gold-line:#6E5623;
-    --settled:#57C6D6;
-    --settled-soft:#0E3B45;
-    --settled-line:#2C6B78;
-    --focus:#57C6D6;
-    --bubble:rgba(146,214,224,.22);
-    --shadow:0 2px 0 rgba(0,0,0,.35), 0 12px 28px -20px #000;
+    --water-top:#0A2836;
+    --water-bot:#04161F;
+    --sand:#4B3F27;
+    --sand-deep:#3A311C;
+    --kelp:#1D5B44;
+    --coral:#A85B57;
+    --jelly:#A05C7C;
+    --surface:#103340;
+    --surface-2:#17414F;
+    --ink:#E8F5F7;
+    --ink-soft:#A8C6CE;
+    --ink-faint:#728F9B;
+    --outline:#03141C;
+    --line:#27505E;
+    --line-strong:#3B6D7C;
+    --krabs:#F2564A;
+    --krabs-ink:#FF6E62;
+    --sun:#FFD95E;
+    --gold:#F3BE4B;
+    --gold-soft:#3B2E12;
+    --gold-line:#6F5623;
+    --settled:#53C6D6;
+    --settled-soft:#0E3C46;
+    --settled-line:#2D6C79;
+    --plank:#7A5330;
+    --plaque-ink:#FFEFC7;
+    --plaque-ink-soft:#C4AE7E;
+    --focus:#53C6D6;
+    --bubble:rgba(150,220,230,.20);
   }
 
   *{box-sizing:border-box}
   body{
-    background:var(--sea);
+    background-color:var(--water-bot);
+    background-image:linear-gradient(180deg, var(--water-top) 0%, var(--water-bot) 72%, var(--water-bot) 100%);
+    background-attachment:fixed;
     color:var(--ink);
     font-family:var(--body);
     font-size:15px;
     line-height:1.5;
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:640px;margin:0 auto;padding:18px 15px 60px;display:flex;flex-direction:column;gap:18px}
 
-  /* ---------- signboard ---------- */
+  /* ---------- the sea, behind everything ---------- */
+  .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .rays{
+    position:absolute;top:-10%;left:-20%;right:-20%;height:70%;
+    background:repeating-conic-gradient(from 200deg at 50% 0%,
+      rgba(255,255,255,.20) 0deg 3deg, transparent 3deg 11deg);
+    opacity:.55;
+  }
+  :root[data-theme="dark"] .rays{opacity:.13}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rays{opacity:.13}}
+  .floor{position:absolute;left:0;right:0;bottom:0;height:132px}
+  .bub{
+    position:absolute;border-radius:50%;
+    background:var(--bubble);border:1px solid var(--bubble);
+    animation:rise linear infinite;bottom:-40px;
+  }
+  @keyframes rise{
+    from{transform:translateY(0) translateX(0) scale(.8);opacity:0}
+    10%{opacity:1}
+    to{transform:translateY(-105vh) translateX(22px) scale(1.15);opacity:0}
+  }
+  .jelly{position:absolute;animation:drift ease-in-out infinite alternate;opacity:.85}
+  @keyframes drift{
+    from{transform:translate(0,0) rotate(-4deg)}
+    to{transform:translate(26px,-38px) rotate(5deg)}
+  }
+  .wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:16px 14px 150px;display:flex;flex-direction:column;gap:16px}
+
+  /* ---------- the signboard ---------- */
   .masthead{
+    position:relative;
     display:flex;align-items:center;gap:12px;
-    background:var(--surface);border:2px solid var(--ink);border-radius:8px;
-    padding:12px 14px;box-shadow:var(--shadow);
+    background:
+      radial-gradient(circle at 12px 12px, var(--outline) 2.4px, transparent 2.6px),
+      radial-gradient(circle at calc(100% - 12px) 12px, var(--outline) 2.4px, transparent 2.6px),
+      radial-gradient(circle at 12px calc(100% - 12px), var(--outline) 2.4px, transparent 2.6px),
+      radial-gradient(circle at calc(100% - 12px) calc(100% - 12px), var(--outline) 2.4px, transparent 2.6px),
+      repeating-linear-gradient(180deg, var(--plank) 0 13px, rgba(0,0,0,.09) 13px 14px),
+      var(--plank);
+    border:var(--hard) solid var(--outline);border-radius:12px;
+    padding:13px 15px;box-shadow:0 4px 0 var(--outline), 0 14px 26px -18px rgba(0,0,0,.65);
   }
-  .coin{
-    width:44px;height:44px;border-radius:50%;flex:none;
-    background:radial-gradient(circle at 34% 28%, var(--gold-bright), var(--gold) 72%);
-    border:2px solid var(--ink);
-    display:grid;place-items:center;
-    font-family:var(--poster);font-size:22px;color:#2C1E03;
-    text-shadow:0 1px 0 rgba(255,255,255,.45);
-  }
+  .masthead .mark{width:46px;height:52px;flex:none;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
   .masthead h1{
-    font-family:var(--poster);font-weight:400;font-size:clamp(24px,7vw,30px);
-    letter-spacing:.02em;line-height:1;margin:0;color:var(--krabs);
-    text-shadow:1.5px 1.5px 0 var(--ink);
+    font-family:var(--poster);font-weight:400;font-size:clamp(27px,8.5vw,36px);
+    letter-spacing:.02em;line-height:.98;margin:0;color:var(--sun);
+    text-shadow:
+      2.5px 2.5px 0 var(--outline), -2px 2px 0 var(--outline),
+      2px -2px 0 var(--outline), -2px -2px 0 var(--outline);
   }
-  .masthead .who{font-size:12.5px;color:var(--ink-soft);margin:4px 0 0;font-weight:600}
+  .masthead .who{
+    font-size:12.5px;color:#FFF3D6;margin:3px 0 0;font-weight:800;
+    text-shadow:1px 1px 0 rgba(0,0,0,.55);
+  }
 
   /* ---------- the money board ---------- */
   .ledger{
     position:relative;overflow:hidden;
-    background:var(--surface);
-    border:2px solid var(--ink);border-radius:8px;
-    box-shadow:var(--shadow);
-    padding:18px 16px 16px;
+    background:linear-gradient(180deg, var(--deep-2), var(--deep));
+    border:var(--hard) solid var(--outline);border-radius:14px;
+    box-shadow:0 4px 0 var(--outline), 0 16px 30px -20px rgba(0,0,0,.8);
+    padding:16px 15px 15px;
+    color:#DCF3F7;
   }
-  .bubbles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-  .bub{
-    position:absolute;bottom:-24px;border-radius:50%;
-    background:var(--bubble);border:1px solid var(--bubble);
-    animation:rise linear infinite;
+  .ledger .surface-line{
+    position:absolute;top:0;left:0;right:0;height:10px;
+    background:radial-gradient(circle at 10px -4px, rgba(255,255,255,.28) 9px, transparent 10px) repeat-x;
+    background-size:20px 12px;
   }
-  @keyframes rise{
-    from{transform:translateY(0) translateX(0);opacity:0}
-    12%{opacity:1}
-    to{transform:translateY(-320px) translateX(14px);opacity:0}
-  }
-  .ledger>*:not(.bubbles){position:relative}
+  .ledger>*:not(.bubbles):not(.surface-line){position:relative;z-index:1}
+  .bubbles{position:absolute;inset:0;overflow:hidden;z-index:0;opacity:.5}
 
   .eyebrow{
-    font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--ink-soft);margin:0;
+    font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    color:#8FD5E2;margin:0;
   }
   .amount{
     font-family:var(--poster);font-weight:400;
-    font-size:clamp(50px,15vw,70px);line-height:1;letter-spacing:.01em;
-    margin:6px 0 0;color:var(--gold);
-    text-shadow:2px 2px 0 var(--ink);
+    font-size:clamp(54px,16vw,76px);line-height:1;letter-spacing:.01em;
+    margin:5px 0 0;color:var(--sun);
+    text-shadow:
+      3px 3px 0 var(--outline), -2.5px 2.5px 0 var(--outline),
+      2.5px -2.5px 0 var(--outline), -2.5px -2.5px 0 var(--outline);
   }
-  .amount.is-clear{color:var(--settled)}
-  .amount.pulse{animation:pop .45s ease-out}
-  @keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.07) rotate(-1.5deg)}100%{transform:scale(1)}}
-  .status{margin:10px 0 0;font-size:14.5px;color:var(--ink-soft)}
-  .status b{color:var(--ink);font-weight:700}
+  .amount.is-clear{color:#6FE3C8}
+  .amount.pulse{animation:pop .5s ease-out}
+  @keyframes pop{0%{transform:scale(1)}30%{transform:scale(1.08) rotate(-2deg)}60%{transform:scale(.99) rotate(1deg)}100%{transform:scale(1)}}
+  .status{margin:9px 0 0;font-size:14.5px;color:#B7DEE7;font-weight:600}
+  .status b{color:#FFF3D6;font-weight:800}
   .next{
-    margin:14px 0 0;padding-top:12px;
-    border-top:2px dashed var(--line-strong);
-    font-size:13px;color:var(--ink-soft);
+    margin:13px 0 0;padding-top:11px;
+    border-top:2px dashed rgba(255,255,255,.28);
+    font-size:13px;color:#9FD2DE;font-weight:600;
   }
-  .next .rc{font-family:var(--receipt);font-weight:700;color:var(--ink)}
+  .next .rc{font-family:var(--receipt);font-weight:700;color:#FFF3D6}
 
-  .actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
-  button{font:inherit;cursor:pointer;border-radius:6px;transition:transform .1s,background .12s,border-color .12s,color .12s}
-  button:active{transform:translateY(1px)}
+  /* ---------- buttons ---------- */
+  .actions{display:flex;gap:9px;margin-top:15px;flex-wrap:wrap}
+  button{font:inherit;cursor:pointer;border-radius:9px;transition:transform .09s, background .12s, border-color .12s, color .12s}
+  button:active{transform:translateY(2px)}
   button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible{
-    outline:3px solid var(--focus);outline-offset:2px;
+    outline:3px solid var(--sun);outline-offset:2px;
   }
   .btn{
-    background:var(--krabs);color:#FFF6EE;border:2px solid var(--ink);
-    padding:12px 16px;font-weight:700;font-size:15.5px;flex:1 1 auto;
-    box-shadow:0 2px 0 var(--ink);
+    background:var(--krabs);color:#FFF6EE;border:var(--hard) solid var(--outline);
+    padding:12px 16px;font-weight:800;font-size:16px;flex:1 1 auto;
+    box-shadow:0 4px 0 var(--outline);letter-spacing:.01em;
   }
   .btn:hover{background:var(--krabs-ink)}
+  .btn:active{box-shadow:0 2px 0 var(--outline)}
   .btn-ghost{
-    background:var(--surface-2);color:var(--ink);border:2px solid var(--line-strong);
-    padding:12px 14px;font-weight:700;font-size:14px;
+    background:var(--sun);color:var(--outline);border:var(--hard) solid var(--outline);
+    padding:12px 14px;font-weight:800;font-size:14.5px;box-shadow:0 4px 0 var(--outline);
   }
-  .btn-ghost:hover{border-color:var(--ink)}
+  .btn-ghost:hover{background:#FFE07A}
+  .btn-ghost:active{box-shadow:0 2px 0 var(--outline)}
   .btn-mini{
-    background:transparent;border:1.5px solid var(--line-strong);color:var(--ink-soft);
-    padding:4px 9px;font-size:12px;font-weight:700;border-radius:5px;
+    background:var(--surface-2);border:2px solid var(--outline);color:var(--ink);
+    padding:4px 9px;font-size:12px;font-weight:800;border-radius:7px;box-shadow:0 2px 0 var(--outline);
   }
-  .btn-mini:hover{border-color:var(--ink);color:var(--ink)}
-  .btn-mini.is-danger{color:var(--krabs);border-color:var(--krabs)}
+  .btn-mini:hover{background:var(--sun);color:var(--outline)}
+  .btn-mini:active{box-shadow:0 1px 0 var(--outline)}
+  .btn-mini.is-danger{background:var(--krabs);color:#FFF6EE}
 
   /* ---------- pay form ---------- */
-  .payform{margin-top:14px;padding-top:14px;border-top:2px solid var(--line);display:flex;flex-direction:column;gap:10px}
+  .payform{margin-top:14px;padding-top:13px;border-top:2px solid rgba(255,255,255,.22);display:flex;flex-direction:column;gap:10px}
   .payform[hidden]{display:none}
   .field{display:flex;flex-direction:column;gap:5px}
-  .field label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
-  input[type="number"],input[type="date"],input[type="text"],select{
+  .field label{font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:#8FD5E2}
+  .settings-body .field label{color:var(--ink-soft)}
+  input[type="number"],input[type="date"],input[type="text"],input[type="password"],select{
     font-family:var(--receipt);font-size:15px;color:var(--ink);
-    background:var(--surface-2);border:2px solid var(--line-strong);border-radius:6px;
+    background:var(--surface);border:2px solid var(--outline);border-radius:8px;
     padding:9px 10px;width:100%;
   }
-  input[type="text"],select{font-family:var(--body);font-weight:600}
+  input[type="text"],input[type="password"],select{font-family:var(--body);font-weight:700}
   .row{display:flex;gap:10px;flex-wrap:wrap}
   .row>*{flex:1 1 140px;min-width:0}
   .quick{display:flex;gap:6px;flex-wrap:wrap}
@@ -192,88 +261,153 @@
   /* ---------- totals ---------- */
   .totals{
     display:grid;grid-template-columns:repeat(3,1fr);
-    border:2px solid var(--ink);border-radius:8px;background:var(--surface);
-    box-shadow:var(--shadow);overflow:hidden;
+    border:var(--hard) solid var(--outline);border-radius:12px;background:var(--surface);
+    box-shadow:0 4px 0 var(--outline);overflow:hidden;
   }
-  .totals div{padding:11px 12px;border-right:2px solid var(--line)}
+  .totals div{padding:10px 12px;border-right:2px solid var(--line)}
   .totals div:last-child{border-right:0}
-  .totals dt{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:0}
-  .totals dd{margin:3px 0 0;font-family:var(--receipt);font-size:18px;font-weight:700}
+  .totals dt{font-size:10.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);margin:0}
+  .totals dd{margin:2px 0 0;font-family:var(--receipt);font-size:18px;font-weight:700}
+
+  /* ---------- section plaques ---------- */
+  .sec-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+  section h2{
+    font-family:var(--poster);font-weight:400;font-size:16px;margin:0;letter-spacing:.03em;
+    display:inline-flex;align-items:baseline;gap:8px;
+    background:var(--sand);color:var(--plaque-ink);
+    border:2px solid var(--outline);border-radius:8px;
+    padding:5px 11px;transform:rotate(-1.1deg);
+    box-shadow:0 3px 0 var(--outline);
+  }
+  section h2 .count{font-family:var(--receipt);font-size:11.5px;font-weight:700;color:var(--plaque-ink-soft)}
 
   /* ---------- the haul ---------- */
-  section h2{
-    font-family:var(--poster);font-weight:400;font-size:17px;margin:0;letter-spacing:.02em;
-    display:flex;align-items:baseline;gap:8px;
-  }
-  section h2 .count{font-family:var(--receipt);font-size:12px;font-weight:700;color:var(--ink-faint)}
-  .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:9px}
-  .weeks{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:7px}
+  .weeks{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
   .wk{
-    border-radius:6px;padding:7px 6px;text-align:center;border:2px solid var(--line-strong);
-    background:var(--surface);display:flex;flex-direction:column;gap:1px;
+    position:relative;border-radius:9px;padding:8px 6px;text-align:center;
+    border:2px solid var(--outline);background:var(--surface);
+    display:flex;flex-direction:column;gap:1px;box-shadow:0 3px 0 var(--outline);
   }
-  .wk-date{font-size:10.5px;color:var(--ink-soft);font-weight:600}
-  .wk-amt{font-family:var(--receipt);font-size:14.5px;font-weight:700}
-  .wk-tag{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-  .wk.paid{background:var(--settled-soft);border-color:var(--settled-line)}
-  .wk.paid .wk-amt,.wk.paid .wk-tag{color:var(--settled)}
+  .wk-date{font-size:10.5px;color:var(--ink-soft);font-weight:800}
+  .wk-amt{font-family:var(--receipt);font-size:15px;font-weight:700}
+  .wk-tag{font-size:9.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+  .wk.paid{background:var(--settled-soft)}
+  .wk.paid .wk-amt{color:var(--settled)}
+  .wk.paid .wk-tag{
+    color:var(--settled);border:1.5px solid var(--settled);border-radius:4px;
+    display:inline-block;margin:2px auto 0;padding:0 4px;transform:rotate(-7deg);
+  }
   .wk.owed{
-    background:radial-gradient(circle at 50% 34%, var(--gold-soft), var(--surface) 82%);
-    border-color:var(--gold-line);border-style:dashed;
+    background:radial-gradient(circle at 50% 30%, var(--gold-soft), var(--surface) 85%);
+    border-style:dashed;
   }
   .wk.owed .wk-amt,.wk.owed .wk-tag{color:var(--gold)}
-  .wk.part{background:var(--gold-soft);border-color:var(--gold-line)}
+  .wk.part{background:var(--gold-soft)}
   .wk.part .wk-amt,.wk.part .wk-tag{color:var(--gold)}
 
   /* ---------- receipts ---------- */
   .hist{
     list-style:none;margin:0;padding:0;
-    border:2px solid var(--ink);border-radius:8px;background:var(--surface);
-    box-shadow:var(--shadow);overflow:hidden;
+    border:var(--hard) solid var(--outline);border-radius:12px;background:var(--surface);
+    box-shadow:0 4px 0 var(--outline);overflow:hidden;
   }
   .hist li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:2px dashed var(--line)}
   .hist li:last-child{border-bottom:0}
-  .hist .h-date{font-family:var(--receipt);font-size:13px;color:var(--ink-soft);flex:none;width:66px}
+  .hist .h-date{font-family:var(--receipt);font-size:13px;color:var(--ink-soft);flex:none;width:66px;font-weight:700}
   .hist .h-amt{font-family:var(--receipt);font-size:15px;font-weight:700;flex:none;width:62px}
-  .hist .h-note{font-size:12.5px;color:var(--ink-faint);flex:1 1 auto;min-width:0;overflow-wrap:anywhere;font-weight:600}
+  .hist .h-note{font-size:12.5px;color:var(--ink-faint);flex:1 1 auto;min-width:0;overflow-wrap:anywhere;font-weight:700}
   .empty{
-    border:2px dashed var(--line-strong);border-radius:8px;padding:15px;
-    font-size:13.5px;color:var(--ink-soft);background:var(--surface);font-weight:600;
+    border:2px dashed var(--outline);border-radius:12px;padding:14px;
+    font-size:13.5px;color:var(--ink-soft);background:var(--surface);font-weight:700;
   }
 
-  /* ---------- settings ---------- */
-  details.settings{border:2px solid var(--ink);border-radius:8px;background:var(--surface);box-shadow:var(--shadow)}
-  details.settings summary{
+  /* ---------- panels ---------- */
+  details.panel{
+    border:var(--hard) solid var(--outline);border-radius:12px;background:var(--surface);
+    box-shadow:0 4px 0 var(--outline);
+  }
+  details.panel summary{
     cursor:pointer;padding:11px 14px;font-family:var(--poster);font-weight:400;font-size:16px;
-    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;letter-spacing:.02em;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;letter-spacing:.03em;
   }
-  details.settings summary::-webkit-details-marker{display:none}
-  details.settings summary::after{content:"+";font-family:var(--receipt);font-weight:700;color:var(--ink-faint)}
-  details.settings[open] summary::after{content:"–"}
-  .settings-body{padding:0 14px 14px;display:flex;flex-direction:column;gap:12px;border-top:2px dashed var(--line)}
-  .settings-body>.field:first-child{margin-top:12px}
-  .hint{font-size:12px;color:var(--ink-faint);margin:0;font-weight:600}
+  details.panel summary::-webkit-details-marker{display:none}
+  details.panel summary::after{content:"+";font-family:var(--poster);color:var(--ink-faint)}
+  details.panel[open] summary::after{content:"–"}
+  .settings-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:12px;border-top:2px dashed var(--line)}
+  .hint{font-size:12px;color:var(--ink-faint);margin:0;font-weight:700}
+  .hint code{font-family:var(--receipt);font-size:11.5px;background:var(--surface-2);padding:1px 4px;border-radius:4px}
   .danger-zone{border-top:2px dashed var(--line);padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .gh-state{
+    font-size:12.5px;font-weight:800;color:var(--ink-soft);
+    background:var(--surface-2);border:2px solid var(--line-strong);border-radius:8px;padding:8px 10px;
+  }
 
-  .foot{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-faint);font-weight:600}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-faint);flex:none;border:1px solid var(--ink)}
+  .foot{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink);font-weight:800;
+    background:var(--surface);border:2px solid var(--outline);border-radius:20px;padding:5px 12px;align-self:flex-start;
+    box-shadow:0 3px 0 var(--outline);}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--ink-faint);flex:none;border:1.5px solid var(--outline)}
   .dot.live{background:var(--settled)}
+  .dot.gh{background:var(--sun)}
   .toast{
-    position:fixed;left:50%;bottom:16px;transform:translateX(-50%);
-    background:var(--krabs);color:#FFF6EE;padding:10px 16px;border-radius:6px;
-    border:2px solid var(--ink);font-size:13.5px;font-weight:700;
-    box-shadow:0 3px 0 var(--ink);z-index:9;max-width:92vw;text-align:center;
+    position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
+    background:var(--krabs);color:#FFF6EE;padding:11px 18px;border-radius:22px;
+    border:var(--hard) solid var(--outline);font-size:14px;font-weight:800;
+    box-shadow:0 4px 0 var(--outline);z-index:9;max-width:92vw;text-align:center;
   }
   .toast[hidden]{display:none}
   @media (prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important}
-    .bub{display:none}
+    .bub,.jelly{display:none}
   }
 </style>
 
+<div class="scene" aria-hidden="true">
+  <div class="rays"></div>
+  <span class="bub" style="left:6%;width:11px;height:11px;animation-duration:19s;animation-delay:0s"></span>
+  <span class="bub" style="left:18%;width:6px;height:6px;animation-duration:24s;animation-delay:5s"></span>
+  <span class="bub" style="left:31%;width:14px;height:14px;animation-duration:21s;animation-delay:9s"></span>
+  <span class="bub" style="left:52%;width:8px;height:8px;animation-duration:26s;animation-delay:2s"></span>
+  <span class="bub" style="left:69%;width:17px;height:17px;animation-duration:23s;animation-delay:12s"></span>
+  <span class="bub" style="left:84%;width:7px;height:7px;animation-duration:20s;animation-delay:7s"></span>
+  <span class="bub" style="left:93%;width:12px;height:12px;animation-duration:27s;animation-delay:15s"></span>
+
+  <svg class="jelly" style="left:5%;bottom:96px;width:54px;animation-duration:9s" viewBox="0 0 60 74">
+    <path d="M4 30a26 22 0 0 1 52 0v5H4z" fill="var(--jelly)" stroke="var(--outline)" stroke-width="3"/>
+    <circle cx="20" cy="24" r="4" fill="var(--outline)" opacity=".35"/>
+    <circle cx="34" cy="20" r="5" fill="var(--outline)" opacity=".35"/>
+    <circle cx="44" cy="28" r="3" fill="var(--outline)" opacity=".35"/>
+    <path d="M13 35c0 12-5 16-5 26M25 35c0 14 4 18 4 28M37 35c0 12 3 17 3 25M49 35c0 10-4 14-4 22"
+          fill="none" stroke="var(--jelly)" stroke-width="3.5" stroke-linecap="round"/>
+  </svg>
+  <svg class="jelly" style="right:7%;bottom:132px;width:40px;animation-duration:12s;animation-delay:3s" viewBox="0 0 60 74">
+    <path d="M4 30a26 22 0 0 1 52 0v5H4z" fill="var(--coral)" stroke="var(--outline)" stroke-width="3"/>
+    <circle cx="22" cy="22" r="4" fill="var(--outline)" opacity=".3"/>
+    <circle cx="38" cy="24" r="4" fill="var(--outline)" opacity=".3"/>
+    <path d="M13 35c0 12-5 16-5 26M25 35c0 14 4 18 4 28M37 35c0 12 3 17 3 25M49 35c0 10-4 14-4 22"
+          fill="none" stroke="var(--coral)" stroke-width="3.5" stroke-linecap="round"/>
+  </svg>
+
+  <svg class="floor" viewBox="0 0 400 132" preserveAspectRatio="none">
+    <path d="M0 60c34-13 56 6 92 2s52-20 86-16 46 20 84 16 60-16 78-10 34 8 60 4v76H0z"
+          fill="var(--kelp)" opacity=".5"/>
+    <path d="M28 128c-6-26 8-40 4-58M40 128c4-24-8-34-2-52" fill="none" stroke="var(--kelp)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M330 128c8-30-6-42 0-62M344 128c-6-22 6-32 2-48" fill="none" stroke="var(--kelp)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M0 88c40-16 70 6 112 2s58-18 96-14 54 18 96 12 62-14 96-6v50H0z" fill="var(--sand-deep)"/>
+    <path d="M0 98c44-14 72 8 116 4s56-16 94-12 56 16 98 10 58-12 92-4v36H0z" fill="var(--sand)"/>
+    <circle cx="150" cy="120" r="5" fill="var(--sand-deep)"/>
+    <circle cx="262" cy="126" r="7" fill="var(--sand-deep)"/>
+    <circle cx="72" cy="124" r="4" fill="var(--sand-deep)"/>
+  </svg>
+</div>
+
 <div class="wrap">
   <header class="masthead">
-    <div class="coin" aria-hidden="true">$</div>
+    <svg class="mark" viewBox="0 0 46 52" aria-hidden="true">
+      <path d="M23 3c-3 4-8 5-11 3 2 4 1 7-2 9 4 0 6 2 6 5M23 3c3 4 8 5 11 3-2 4-1 7 2 9-4 0-6 2-6 5"
+            fill="none" stroke="var(--kelp)" stroke-width="2.6" stroke-linejoin="round"/>
+      <ellipse cx="23" cy="34" rx="15" ry="17" fill="#E9A020" stroke="var(--outline)" stroke-width="3"/>
+      <path d="M10 27l13 8 13-8M10 38l13 8 13-8M23 18v33" fill="none" stroke="var(--outline)" stroke-width="1.6" opacity=".55"/>
+    </svg>
     <div>
       <h1>Me Money</h1>
       <p class="who" id="who">Weekly allowance, counted week by week</p>
@@ -281,12 +415,12 @@
   </header>
 
   <div class="ledger">
-    <div class="bubbles" aria-hidden="true">
-      <span class="bub" style="left:8%;width:9px;height:9px;animation-duration:11s;animation-delay:0s"></span>
-      <span class="bub" style="left:26%;width:5px;height:5px;animation-duration:14s;animation-delay:2.5s"></span>
-      <span class="bub" style="left:63%;width:12px;height:12px;animation-duration:13s;animation-delay:1.2s"></span>
-      <span class="bub" style="left:82%;width:7px;height:7px;animation-duration:16s;animation-delay:4s"></span>
-      <span class="bub" style="left:45%;width:4px;height:4px;animation-duration:12s;animation-delay:6s"></span>
+    <div class="surface-line"></div>
+    <div class="bubbles">
+      <span class="bub" style="left:9%;width:9px;height:9px;animation-duration:11s"></span>
+      <span class="bub" style="left:27%;width:5px;height:5px;animation-duration:14s;animation-delay:3s"></span>
+      <span class="bub" style="left:64%;width:13px;height:13px;animation-duration:13s;animation-delay:1s"></span>
+      <span class="bub" style="left:83%;width:7px;height:7px;animation-duration:16s;animation-delay:5s"></span>
     </div>
 
     <p class="eyebrow" id="owedLabel">Owed right now</p>
@@ -339,7 +473,7 @@
     <p class="empty" id="histEmpty">Nothing handed over yet.</p>
   </section>
 
-  <details class="settings" id="settings">
+  <details class="panel" id="settings">
     <summary>Settings</summary>
     <div class="settings-body">
       <div class="field">
@@ -376,6 +510,51 @@
     </div>
   </details>
 
+  <details class="panel" id="ghPanel" hidden>
+    <summary>The book in GitHub</summary>
+    <div class="settings-body">
+      <p class="gh-state" id="ghState">Checking the repo…</p>
+      <p class="hint">
+        The book is kept in your repo as <code>data/ledger.json</code>. Anyone opening the
+        page reads it. To write back from the browser, add a fine-grained token with
+        <b>Contents: read and write</b> on this one repo — it stays in this browser and is
+        never put in the book or the repo.
+      </p>
+      <div class="row">
+        <div class="field">
+          <label for="ghOwner">Owner</label>
+          <input type="text" id="ghOwner" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="ghRepo">Repo</label>
+          <input type="text" id="ghRepo" autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="ghBranch">Branch</label>
+          <input type="text" id="ghBranch" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="ghPath">File</label>
+          <input type="text" id="ghPath" autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+      <div class="field">
+        <label for="ghToken">Token (this browser only)</label>
+        <input type="password" id="ghToken" autocomplete="off" placeholder="github_pat_… — leave empty to stay read-only">
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="ghSave">Save to GitHub</button>
+        <button class="btn-ghost" type="button" id="ghPull">Reload from GitHub</button>
+      </div>
+      <div class="danger-zone">
+        <p class="hint">No token? Copy the book and paste it into the file on github.com.</p>
+        <button class="btn-mini" type="button" id="ghCopy">Copy the book</button>
+      </div>
+    </div>
+  </details>
+
   <p class="foot"><span class="dot" id="syncDot"></span><span id="syncText">Saved on this device</span></p>
 </div>
 
@@ -387,6 +566,7 @@
 
   var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var LS_KEY = "me-money-v1";
+  var GH_KEY = "me-money-github";
   var MS_DAY = 86400000;
 
   /* ---------- dates: whole-day math, DST-proof ---------- */
@@ -417,7 +597,7 @@
   /* ---------- state ---------- */
   var t = todayDate();
   function defaults(){
-    return { name:"", weeklyAmount:5, payday:t.getDay(), startDate:toISO(t), payments:[] };
+    return { name:"", weeklyAmount:5, payday:t.getDay(), startDate:toISO(t), payments:[], updatedAt:"" };
   }
   function normalize(raw){
     var d = defaults();
@@ -429,6 +609,7 @@
       weeklyAmount: isFinite(amt) && amt >= 0 ? amt : d.weeklyAmount,
       payday: pay >= 0 && pay <= 6 ? Math.floor(pay) : d.payday,
       startDate: /^\d{4}-\d{2}-\d{2}$/.test(raw.startDate) ? raw.startDate : d.startDate,
+      updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : "",
       payments: Array.isArray(raw.payments) ? raw.payments.filter(function(p){
         return p && isFinite(Number(p.amount)) && /^\d{4}-\d{2}-\d{2}$/.test(p.date);
       }).map(function(p){
@@ -440,7 +621,8 @@
   }
 
   var state = defaults();
-  var docRef = null;
+  var docRef = null;          /* artifact shared database, when published there */
+  var gh = null;              /* GitHub repo storage, when served from a repo   */
   var showAllWeeks = false;
   var lastOwed = null;
 
@@ -461,7 +643,8 @@
     };
   }
 
-  /* ---------- storage: this device always, shared when the viewer allows ---------- */
+  /* ---------- storage ---------- */
+  function bookJSON(){ return JSON.stringify(state, null, 2) + "\n"; }
   function saveLocal(){
     try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
   }
@@ -473,6 +656,7 @@
     return null;
   }
   function commit(message){
+    state.updatedAt = new Date().toISOString();
     saveLocal();
     render();
     if(docRef){
@@ -482,6 +666,7 @@
       });
     }
     if(message) toast(message);
+    if(gh && gh.token) ghPush(true);
   }
 
   var toastTimer;
@@ -718,14 +903,141 @@
     });
   })();
 
-  /* ---------- boot: render from this device, then light up sharing ---------- */
+  /* ---------- GitHub: the book lives in the repo ---------- */
+  function ghLoadCfg(){
+    var cfg = { owner:"", repo:"", branch:"main", path:"data/ledger.json", token:"" };
+    try{
+      var raw = localStorage.getItem(GH_KEY);
+      if(raw) { var o = JSON.parse(raw); for(var k in cfg){ if(typeof o[k] === "string") cfg[k] = o[k]; } }
+    }catch(e){}
+    if(!cfg.owner || !cfg.repo){
+      /* github.io project pages look like owner.github.io/repo/ */
+      var m = location.hostname.match(/^([^.]+)\.github\.io$/);
+      if(m){
+        cfg.owner = cfg.owner || m[1];
+        var seg = location.pathname.split("/").filter(Boolean)[0];
+        cfg.repo = cfg.repo || (seg || m[1] + ".github.io");
+      }
+    }
+    return cfg;
+  }
+  function ghSaveCfg(){
+    try{ localStorage.setItem(GH_KEY, JSON.stringify(gh)); }catch(e){}
+  }
+  function ghState(msg, kind){
+    $("ghState").textContent = msg;
+    $("syncDot").className = "dot" + (kind === "ok" ? " gh" : "");
+    $("syncText").textContent = kind === "ok" ? "The book lives in GitHub" : "Saved on this device";
+  }
+  function b64(str){
+    var bytes = new TextEncoder().encode(str), bin = "";
+    bytes.forEach(function(b){ bin += String.fromCharCode(b); });
+    return btoa(bin);
+  }
+  function ghHeaders(){
+    var h = { "Accept":"application/vnd.github+json" };
+    if(gh.token) h["Authorization"] = "Bearer " + gh.token;
+    return h;
+  }
+  function ghUrl(){
+    return "https://api.github.com/repos/" + encodeURIComponent(gh.owner) + "/" +
+           encodeURIComponent(gh.repo) + "/contents/" +
+           gh.path.split("/").map(encodeURIComponent).join("/");
+  }
+  var ghSha = null;
+
+  function ghPull(loud){
+    if(!gh.owner || !gh.repo){ ghState("Set the owner and repo below to use the repo copy.", ""); return; }
+    ghState("Reading " + gh.path + " …", "");
+    fetch(ghUrl() + "?ref=" + encodeURIComponent(gh.branch), { headers: ghHeaders(), cache:"no-store" })
+      .then(function(r){
+        if(r.status === 404){ ghSha = null; ghState("No book in the repo yet — Save to GitHub writes the first one.", ""); return null; }
+        if(!r.ok) throw new Error("GitHub said " + r.status);
+        return r.json();
+      })
+      .then(function(j){
+        if(!j) return;
+        ghSha = j.sha;
+        var text = new TextDecoder().decode(Uint8Array.from(atob(j.content.replace(/\n/g,"")), function(ch){ return ch.charCodeAt(0); }));
+        var remote = normalize(JSON.parse(text));
+        var mine = state.updatedAt || "";
+        if(!mine || (remote.updatedAt || "") >= mine){
+          state = remote; saveLocal(); render();
+          ghState("In step with the repo" + (remote.updatedAt ? " · saved " + fmtShort(new Date(remote.updatedAt)) : ""), "ok");
+          if(loud) toast("Loaded from GitHub");
+        } else {
+          ghState("This device has newer changes than the repo — Save to GitHub to push them.", "ok");
+        }
+      })
+      .catch(function(err){ ghState("Couldn't read the repo: " + err.message, ""); });
+  }
+
+  function ghPush(quiet){
+    if(!gh.token){ if(!quiet) toast("Add a token, or copy the book and paste it on github.com"); return; }
+    if(!gh.owner || !gh.repo){ if(!quiet) toast("Set the owner and repo first"); return; }
+    var body = {
+      message: "Update the allowance book",
+      content: b64(bookJSON()),
+      branch: gh.branch
+    };
+    if(ghSha) body.sha = ghSha;
+    fetch(ghUrl(), { method:"PUT", headers: ghHeaders(), body: JSON.stringify(body) })
+      .then(function(r){
+        if(r.status === 409 || r.status === 422){ throw new Error("the repo moved on — reload from GitHub first"); }
+        if(r.status === 401 || r.status === 403){ throw new Error("the token can't write to this repo"); }
+        if(!r.ok) throw new Error("GitHub said " + r.status);
+        return r.json();
+      })
+      .then(function(j){
+        ghSha = j.content && j.content.sha;
+        ghState("In step with the repo · just saved", "ok");
+        if(!quiet) toast("Saved to GitHub");
+      })
+      .catch(function(err){
+        ghState("Couldn't save: " + err.message, "");
+        toast("Couldn't save to GitHub — it's still on this device");
+      });
+  }
+
+  function ghBind(){
+    gh = ghLoadCfg();
+    $("ghPanel").hidden = false;
+    $("ghOwner").value = gh.owner; $("ghRepo").value = gh.repo;
+    $("ghBranch").value = gh.branch; $("ghPath").value = gh.path;
+    $("ghToken").value = gh.token;
+
+    ["ghOwner","ghRepo","ghBranch","ghPath","ghToken"].forEach(function(id){
+      $(id).addEventListener("change", function(){
+        gh.owner = $("ghOwner").value.trim();
+        gh.repo = $("ghRepo").value.trim();
+        gh.branch = $("ghBranch").value.trim() || "main";
+        gh.path = $("ghPath").value.trim() || "data/ledger.json";
+        gh.token = $("ghToken").value.trim();
+        ghSaveCfg();
+      });
+    });
+    $("ghSave").addEventListener("click", function(){ ghPush(false); });
+    $("ghPull").addEventListener("click", function(){ ghPull(true); });
+    $("ghCopy").addEventListener("click", function(){
+      var text = bookJSON();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ toast("Book copied — paste it into " + gh.path); },
+                                                 function(){ toast("Couldn't copy — open the console copy instead"); });
+      } else { toast("Clipboard unavailable in this browser"); }
+    });
+
+    /* the repo copy is the shared truth: read it on every open */
+    ghPull(false);
+  }
+
+  /* ---------- boot ---------- */
   var local = loadLocal();
   if(local) state = local;
   render();
 
   if(window.claude && typeof window.claude.use === "function"){
     window.claude.use("db").then(function(db){
-      if(!db) return;
+      if(!db){ ghBind(); return; }
       docRef = db.doc("ledger/main");
       docRef.onSnapshot(function(snap){
         if(snap.exists){
@@ -743,7 +1055,9 @@
         $("syncDot").className = "dot";
         $("syncText").textContent = "Saved on this device";
       });
-    }).catch(function(){});
+    }).catch(function(){ ghBind(); });
+  } else {
+    ghBind();
   }
 
   /* the owed figure depends on today's date — keep it honest overnight */
