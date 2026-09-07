@@ -23,8 +23,15 @@ money you actually hand over.
   gets you a different reaction than an even book. *Who else is down here?*
   fetches another one.
 
-The cast is original artwork drawn as inline SVG — no character images are
-fetched or bundled, so nothing here is anyone else's to license.
+The six are original artwork drawn as inline SVG — nothing is fetched or bundled,
+so nothing here is anyone else's to license.
+
+**Want different pictures?** *The crew* panel takes any images you choose. They
+are shrunk to 220px, kept in that browser on that device only, and never written
+into the book or the repo — so the phone that pays can have one set and nobody
+else sees them. To put pictures on every device instead, commit them to
+`data/characters/` and list them in `data/characters/index.json`; read that
+folder's README first, because this repository is public.
 
 ## The book lives in this repo
 

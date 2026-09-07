@@ -334,6 +334,28 @@
     font-family:var(--poster);font-size:13.5px;letter-spacing:.03em;color:var(--ink-soft);
   }
 
+
+  /* ---------- your own crew ---------- */
+  .crew-list{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+  .crew-list li{
+    position:relative;width:70px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  }
+  .crew-thumb{
+    width:64px;height:64px;border-radius:50%;object-fit:cover;
+    border:2.5px solid var(--outline);background:var(--sand);
+  }
+  .crew-name{
+    font-size:10.5px;font-weight:800;color:var(--ink-soft);text-align:center;
+    width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .crew-drop{
+    border:2.5px dashed var(--line-strong);border-radius:10px;padding:12px;
+    text-align:center;font-weight:700;font-size:13px;color:var(--ink-soft);
+    background:var(--surface-2);cursor:pointer;display:block;
+  }
+  .crew-drop:hover{border-color:var(--outline);color:var(--ink)}
+  .crew-drop input{display:none}
+
   /* ---------- receipts ---------- */
   .hist{
     list-style:none;margin:0;padding:0;
@@ -670,6 +692,30 @@
     </div>
   </details>
 
+
+  <details class="panel" id="crewPanel">
+    <summary>The crew</summary>
+    <div class="settings-body">
+      <p class="hint">
+        Six sea creatures come with the app. Add your own pictures and they take over the
+        porthole instead — one at random on every load. Pictures stay on this device
+        (shrunk to 220px and kept in this browser); they are never written into the book,
+        the repo, or anywhere else. To put pictures on <b>every</b> device, drop the image
+        files into <code>data/characters/</code> in the repo and list them in
+        <code>data/characters/index.json</code>.
+      </p>
+      <label class="crew-drop" for="crewFile">
+        Choose pictures…
+        <input type="file" id="crewFile" accept="image/*" multiple>
+      </label>
+      <ul class="crew-list" id="crewList"></ul>
+      <div class="danger-zone" id="crewClearRow" hidden>
+        <p class="hint">Remove every picture and the drawn crew comes back.</p>
+        <button class="btn-mini is-danger" type="button" id="crewClear">Clear the crew</button>
+      </div>
+    </div>
+  </details>
+
   <p class="foot"><span class="dot" id="syncDot"></span><span id="syncText">Saved on this device</span></p>
 </div>
 
@@ -989,23 +1035,147 @@
     if(state.weeklyAmount > 0 && c.owed / state.weeklyAmount >= 3) return "deep";
     return "some";
   }
+  function castPool(){ return crew.length ? crew : CAST; }
   function renderCast(c){
-    var who = CAST[castIdx];
-    var art = document.querySelector('#castArt [data-char="' + who.id + '"]');
+    var pool = castPool();
+    var who = pool[castIdx % pool.length];
     var hole = $("portal");
-    if(art && hole.firstChild !== art){
-      hole.textContent = "";
-      hole.appendChild(art.cloneNode(true));
+    var tier = castTier(c);
+    if(crew.length){
+      var img = hole.querySelector("img");
+      if(!img || img.getAttribute("src") !== who.src){
+        hole.textContent = "";
+        img = document.createElement("img");
+        img.src = who.src; img.alt = who.name;
+        img.style.cssText = "width:100%;height:100%;object-fit:cover;display:block";
+        hole.appendChild(img);
+      }
+      var bank = CREW_LINES[tier];
+      $("castLine").textContent = bank[castIdx % bank.length].replace("{owed}", money(Math.abs(c.owed)));
+    } else {
+      var art = document.querySelector('#castArt [data-char="' + who.id + '"]');
+      if(art && !hole.querySelector('[data-char="' + who.id + '"]')){
+        hole.textContent = "";
+        hole.appendChild(art.cloneNode(true));
+      }
+      $("castLine").textContent = who.lines[tier].replace("{owed}", money(Math.abs(c.owed)));
     }
     $("castName").textContent = who.name;
-    $("castLine").textContent = who.lines[castTier(c)]
-      .replace("{owed}", money(Math.abs(c.owed)));
   }
   $("castNext").addEventListener("click", function(){
-    castIdx = (castIdx + 1 + Math.floor(Math.random() * (CAST.length - 1))) % CAST.length;
+    var n = castPool().length;
+    castIdx = n > 1 ? (castIdx + 1 + Math.floor(Math.random() * (n - 1))) % n : 0;
     $("portal").textContent = "";
     renderCast(compute());
   });
+
+
+  /* ---------- your own crew: pictures you supply, kept on this device ---------- */
+  var CREW_KEY = "me-money-crew";
+  var crew = [];
+  /* whatever the picture is, it still has something to say about the number */
+  var CREW_LINES = {
+    deep:["{owed}?! Somebody is in trouble.","{owed} behind. Wow.","{owed}. This has gone on long enough.",
+          "{owed}?! Call the coastguard."],
+    some:["{owed} still owed.","{owed}. Pay up.","{owed} outstanding. Just saying.","{owed}. Tick tock."],
+    square:["All square. Nice one.","Nothing owed. Look at that.","Paid up. Beautiful.","Zero owed. Gold star."],
+    ahead:["Paid ahead. Fancy.","Ahead of the game.","Paid early?! Steady on.","Ahead. Someone's showing off."]
+  };
+  function crewLoad(){
+    try{
+      var raw = localStorage.getItem(CREW_KEY);
+      var arr = raw ? JSON.parse(raw) : [];
+      if(Array.isArray(arr)) crew = arr.filter(function(m){
+        return m && typeof m.src === "string" && m.src.indexOf("data:image/") === 0;
+      }).slice(0,24);
+    }catch(e){ crew = []; }
+  }
+  function crewSave(){
+    try{ localStorage.setItem(CREW_KEY, JSON.stringify(crew)); }
+    catch(e){ toast("No room left in this browser for more pictures"); }
+  }
+  /* shrink on the way in so a phone photo does not fill the browser store */
+  function crewAdd(file){
+    return new Promise(function(resolve){
+      var reader = new FileReader();
+      reader.onload = function(){
+        var img = new Image();
+        img.onload = function(){
+          var side = 220;
+          var cv = document.createElement("canvas");
+          cv.width = side; cv.height = side;
+          var ctx = cv.getContext("2d");
+          var scale = Math.max(side/img.width, side/img.height);
+          var w = img.width*scale, h = img.height*scale;
+          ctx.drawImage(img, (side-w)/2, (side-h)/2, w, h);
+          crew.push({
+            id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+            name: file.name.replace(/\.[^.]+$/,"").slice(0,24),
+            src: cv.toDataURL("image/jpeg", 0.82)
+          });
+          resolve();
+        };
+        img.onerror = function(){ resolve(); };
+        img.src = reader.result;
+      };
+      reader.onerror = function(){ resolve(); };
+      reader.readAsDataURL(file);
+    });
+  }
+  function renderCrewList(){
+    var ul = $("crewList");
+    ul.textContent = "";
+    crew.forEach(function(m){
+      var li = document.createElement("li");
+      var img = document.createElement("img");
+      img.className = "crew-thumb"; img.src = m.src; img.alt = m.name;
+      var nm = document.createElement("span"); nm.className = "crew-name"; nm.textContent = m.name;
+      var rm = document.createElement("button");
+      rm.type = "button"; rm.className = "btn-mini"; rm.textContent = "Remove";
+      rm.setAttribute("aria-label", "Remove " + m.name);
+      rm.addEventListener("click", function(){
+        crew = crew.filter(function(x){ return x.id !== m.id; });
+        crewSave(); renderCrewList(); castIdx = 0; $("portal").textContent = ""; renderCast(compute());
+      });
+      li.appendChild(img); li.appendChild(nm); li.appendChild(rm);
+      ul.appendChild(li);
+    });
+    $("crewClearRow").hidden = crew.length === 0;
+  }
+  function crewBind(){
+    crewLoad();
+    renderCrewList();
+    $("crewFile").addEventListener("change", function(){
+      var files = Array.prototype.slice.call(this.files || []).slice(0,24);
+      if(!files.length) return;
+      Promise.all(files.map(crewAdd)).then(function(){
+        crew = crew.slice(0,24);
+        crewSave(); renderCrewList();
+        castIdx = 0; $("portal").textContent = ""; renderCast(compute());
+        toast(files.length === 1 ? "Welcome aboard" : files.length + " aboard");
+      });
+      this.value = "";
+    });
+    $("crewClear").addEventListener("click", function(){
+      crew = []; crewSave(); renderCrewList();
+      castIdx = 0; $("portal").textContent = ""; renderCast(compute());
+      toast("Back to the drawn crew");
+    });
+    /* pictures committed to the repo show up on every device */
+    fetch("data/characters/index.json", {cache:"no-store"})
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(list){
+        if(!Array.isArray(list) || !list.length) return;
+        list.slice(0,24).forEach(function(item){
+          if(!item || typeof item.file !== "string") return;
+          crew.push({ id:"repo-"+item.file, name:String(item.name || item.file).slice(0,24),
+                      src:"data/characters/" + item.file, fromRepo:true });
+        });
+        renderCrewList();
+        $("portal").textContent = ""; renderCast(compute());
+      })
+      .catch(function(){});
+  }
 
   /* ---------- actions ---------- */
   function addPayment(amount, date, note){
@@ -1209,6 +1379,7 @@
   /* ---------- boot ---------- */
   var local = loadLocal();
   if(local) state = local;
+  crewBind();
   render();
 
   if(window.claude && typeof window.claude.use === "function"){
