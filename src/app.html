@@ -1,0 +1,758 @@
+<title>Me Money</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Luckiest+Guy&family=Nunito:wght@400;600;700&display=swap">
+<style>
+  :root{
+    --sea:#DDF0F2;
+    --surface:#FFF9EE;
+    --surface-2:#F7EBD6;
+    --ink:#123340;
+    --ink-soft:#4E6C78;
+    --ink-faint:#84A0A9;
+    --line:#E2D0AF;
+    --line-strong:#C7AC81;
+    --krabs:#D6392C;
+    --krabs-ink:#AF291E;
+    --gold:#C98A0B;
+    --gold-bright:#F0B429;
+    --gold-soft:#FCF0D5;
+    --gold-line:#E5C57C;
+    --settled:#0E7C90;
+    --settled-soft:#D8EEF1;
+    --settled-line:#96CCD6;
+    --focus:#0E7C90;
+    --bubble:rgba(14,124,144,.13);
+    --shadow:0 2px 0 var(--line-strong), 0 10px 24px -18px rgba(18,51,64,.7);
+    --poster:"Luckiest Guy", "Trebuchet MS", Verdana, sans-serif;
+    --body:"Nunito", system-ui, -apple-system, sans-serif;
+    --receipt:"Courier Prime", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --sea:#062029;
+      --surface:#0E3341;
+      --surface-2:#154150;
+      --ink:#EAF4F3;
+      --ink-soft:#A6C2CB;
+      --ink-faint:#6E8F9B;
+      --line:#26505E;
+      --line-strong:#356A79;
+      --krabs:#F0574A;
+      --krabs-ink:#FF7264;
+      --gold:#F5C044;
+      --gold-bright:#FFD469;
+      --gold-soft:#3A2D11;
+      --gold-line:#6E5623;
+      --settled:#57C6D6;
+      --settled-soft:#0E3B45;
+      --settled-line:#2C6B78;
+      --focus:#57C6D6;
+      --bubble:rgba(146,214,224,.22);
+      --shadow:0 2px 0 rgba(0,0,0,.35), 0 12px 28px -20px #000;
+    }
+  }
+  :root[data-theme="dark"]{
+    --sea:#062029;
+    --surface:#0E3341;
+    --surface-2:#154150;
+    --ink:#EAF4F3;
+    --ink-soft:#A6C2CB;
+    --ink-faint:#6E8F9B;
+    --line:#26505E;
+    --line-strong:#356A79;
+    --krabs:#F0574A;
+    --krabs-ink:#FF7264;
+    --gold:#F5C044;
+    --gold-bright:#FFD469;
+    --gold-soft:#3A2D11;
+    --gold-line:#6E5623;
+    --settled:#57C6D6;
+    --settled-soft:#0E3B45;
+    --settled-line:#2C6B78;
+    --focus:#57C6D6;
+    --bubble:rgba(146,214,224,.22);
+    --shadow:0 2px 0 rgba(0,0,0,.35), 0 12px 28px -20px #000;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--sea);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:15px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:18px 15px 60px;display:flex;flex-direction:column;gap:18px}
+
+  /* ---------- signboard ---------- */
+  .masthead{
+    display:flex;align-items:center;gap:12px;
+    background:var(--surface);border:2px solid var(--ink);border-radius:8px;
+    padding:12px 14px;box-shadow:var(--shadow);
+  }
+  .coin{
+    width:44px;height:44px;border-radius:50%;flex:none;
+    background:radial-gradient(circle at 34% 28%, var(--gold-bright), var(--gold) 72%);
+    border:2px solid var(--ink);
+    display:grid;place-items:center;
+    font-family:var(--poster);font-size:22px;color:#2C1E03;
+    text-shadow:0 1px 0 rgba(255,255,255,.45);
+  }
+  .masthead h1{
+    font-family:var(--poster);font-weight:400;font-size:clamp(24px,7vw,30px);
+    letter-spacing:.02em;line-height:1;margin:0;color:var(--krabs);
+    text-shadow:1.5px 1.5px 0 var(--ink);
+  }
+  .masthead .who{font-size:12.5px;color:var(--ink-soft);margin:4px 0 0;font-weight:600}
+
+  /* ---------- the money board ---------- */
+  .ledger{
+    position:relative;overflow:hidden;
+    background:var(--surface);
+    border:2px solid var(--ink);border-radius:8px;
+    box-shadow:var(--shadow);
+    padding:18px 16px 16px;
+  }
+  .bubbles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .bub{
+    position:absolute;bottom:-24px;border-radius:50%;
+    background:var(--bubble);border:1px solid var(--bubble);
+    animation:rise linear infinite;
+  }
+  @keyframes rise{
+    from{transform:translateY(0) translateX(0);opacity:0}
+    12%{opacity:1}
+    to{transform:translateY(-320px) translateX(14px);opacity:0}
+  }
+  .ledger>*:not(.bubbles){position:relative}
+
+  .eyebrow{
+    font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);margin:0;
+  }
+  .amount{
+    font-family:var(--poster);font-weight:400;
+    font-size:clamp(50px,15vw,70px);line-height:1;letter-spacing:.01em;
+    margin:6px 0 0;color:var(--gold);
+    text-shadow:2px 2px 0 var(--ink);
+  }
+  .amount.is-clear{color:var(--settled)}
+  .amount.pulse{animation:pop .45s ease-out}
+  @keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.07) rotate(-1.5deg)}100%{transform:scale(1)}}
+  .status{margin:10px 0 0;font-size:14.5px;color:var(--ink-soft)}
+  .status b{color:var(--ink);font-weight:700}
+  .next{
+    margin:14px 0 0;padding-top:12px;
+    border-top:2px dashed var(--line-strong);
+    font-size:13px;color:var(--ink-soft);
+  }
+  .next .rc{font-family:var(--receipt);font-weight:700;color:var(--ink)}
+
+  .actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  button{font:inherit;cursor:pointer;border-radius:6px;transition:transform .1s,background .12s,border-color .12s,color .12s}
+  button:active{transform:translateY(1px)}
+  button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible{
+    outline:3px solid var(--focus);outline-offset:2px;
+  }
+  .btn{
+    background:var(--krabs);color:#FFF6EE;border:2px solid var(--ink);
+    padding:12px 16px;font-weight:700;font-size:15.5px;flex:1 1 auto;
+    box-shadow:0 2px 0 var(--ink);
+  }
+  .btn:hover{background:var(--krabs-ink)}
+  .btn-ghost{
+    background:var(--surface-2);color:var(--ink);border:2px solid var(--line-strong);
+    padding:12px 14px;font-weight:700;font-size:14px;
+  }
+  .btn-ghost:hover{border-color:var(--ink)}
+  .btn-mini{
+    background:transparent;border:1.5px solid var(--line-strong);color:var(--ink-soft);
+    padding:4px 9px;font-size:12px;font-weight:700;border-radius:5px;
+  }
+  .btn-mini:hover{border-color:var(--ink);color:var(--ink)}
+  .btn-mini.is-danger{color:var(--krabs);border-color:var(--krabs)}
+
+  /* ---------- pay form ---------- */
+  .payform{margin-top:14px;padding-top:14px;border-top:2px solid var(--line);display:flex;flex-direction:column;gap:10px}
+  .payform[hidden]{display:none}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  input[type="number"],input[type="date"],input[type="text"],select{
+    font-family:var(--receipt);font-size:15px;color:var(--ink);
+    background:var(--surface-2);border:2px solid var(--line-strong);border-radius:6px;
+    padding:9px 10px;width:100%;
+  }
+  input[type="text"],select{font-family:var(--body);font-weight:600}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row>*{flex:1 1 140px;min-width:0}
+  .quick{display:flex;gap:6px;flex-wrap:wrap}
+
+  /* ---------- totals ---------- */
+  .totals{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border:2px solid var(--ink);border-radius:8px;background:var(--surface);
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .totals div{padding:11px 12px;border-right:2px solid var(--line)}
+  .totals div:last-child{border-right:0}
+  .totals dt{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:0}
+  .totals dd{margin:3px 0 0;font-family:var(--receipt);font-size:18px;font-weight:700}
+
+  /* ---------- the haul ---------- */
+  section h2{
+    font-family:var(--poster);font-weight:400;font-size:17px;margin:0;letter-spacing:.02em;
+    display:flex;align-items:baseline;gap:8px;
+  }
+  section h2 .count{font-family:var(--receipt);font-size:12px;font-weight:700;color:var(--ink-faint)}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:9px}
+  .weeks{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:7px}
+  .wk{
+    border-radius:6px;padding:7px 6px;text-align:center;border:2px solid var(--line-strong);
+    background:var(--surface);display:flex;flex-direction:column;gap:1px;
+  }
+  .wk-date{font-size:10.5px;color:var(--ink-soft);font-weight:600}
+  .wk-amt{font-family:var(--receipt);font-size:14.5px;font-weight:700}
+  .wk-tag{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .wk.paid{background:var(--settled-soft);border-color:var(--settled-line)}
+  .wk.paid .wk-amt,.wk.paid .wk-tag{color:var(--settled)}
+  .wk.owed{
+    background:radial-gradient(circle at 50% 34%, var(--gold-soft), var(--surface) 82%);
+    border-color:var(--gold-line);border-style:dashed;
+  }
+  .wk.owed .wk-amt,.wk.owed .wk-tag{color:var(--gold)}
+  .wk.part{background:var(--gold-soft);border-color:var(--gold-line)}
+  .wk.part .wk-amt,.wk.part .wk-tag{color:var(--gold)}
+
+  /* ---------- receipts ---------- */
+  .hist{
+    list-style:none;margin:0;padding:0;
+    border:2px solid var(--ink);border-radius:8px;background:var(--surface);
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .hist li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:2px dashed var(--line)}
+  .hist li:last-child{border-bottom:0}
+  .hist .h-date{font-family:var(--receipt);font-size:13px;color:var(--ink-soft);flex:none;width:66px}
+  .hist .h-amt{font-family:var(--receipt);font-size:15px;font-weight:700;flex:none;width:62px}
+  .hist .h-note{font-size:12.5px;color:var(--ink-faint);flex:1 1 auto;min-width:0;overflow-wrap:anywhere;font-weight:600}
+  .empty{
+    border:2px dashed var(--line-strong);border-radius:8px;padding:15px;
+    font-size:13.5px;color:var(--ink-soft);background:var(--surface);font-weight:600;
+  }
+
+  /* ---------- settings ---------- */
+  details.settings{border:2px solid var(--ink);border-radius:8px;background:var(--surface);box-shadow:var(--shadow)}
+  details.settings summary{
+    cursor:pointer;padding:11px 14px;font-family:var(--poster);font-weight:400;font-size:16px;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;letter-spacing:.02em;
+  }
+  details.settings summary::-webkit-details-marker{display:none}
+  details.settings summary::after{content:"+";font-family:var(--receipt);font-weight:700;color:var(--ink-faint)}
+  details.settings[open] summary::after{content:"–"}
+  .settings-body{padding:0 14px 14px;display:flex;flex-direction:column;gap:12px;border-top:2px dashed var(--line)}
+  .settings-body>.field:first-child{margin-top:12px}
+  .hint{font-size:12px;color:var(--ink-faint);margin:0;font-weight:600}
+  .danger-zone{border-top:2px dashed var(--line);padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+  .foot{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-faint);font-weight:600}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-faint);flex:none;border:1px solid var(--ink)}
+  .dot.live{background:var(--settled)}
+  .toast{
+    position:fixed;left:50%;bottom:16px;transform:translateX(-50%);
+    background:var(--krabs);color:#FFF6EE;padding:10px 16px;border-radius:6px;
+    border:2px solid var(--ink);font-size:13.5px;font-weight:700;
+    box-shadow:0 3px 0 var(--ink);z-index:9;max-width:92vw;text-align:center;
+  }
+  .toast[hidden]{display:none}
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+    .bub{display:none}
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="coin" aria-hidden="true">$</div>
+    <div>
+      <h1>Me Money</h1>
+      <p class="who" id="who">Weekly allowance, counted week by week</p>
+    </div>
+  </header>
+
+  <div class="ledger">
+    <div class="bubbles" aria-hidden="true">
+      <span class="bub" style="left:8%;width:9px;height:9px;animation-duration:11s;animation-delay:0s"></span>
+      <span class="bub" style="left:26%;width:5px;height:5px;animation-duration:14s;animation-delay:2.5s"></span>
+      <span class="bub" style="left:63%;width:12px;height:12px;animation-duration:13s;animation-delay:1.2s"></span>
+      <span class="bub" style="left:82%;width:7px;height:7px;animation-duration:16s;animation-delay:4s"></span>
+      <span class="bub" style="left:45%;width:4px;height:4px;animation-duration:12s;animation-delay:6s"></span>
+    </div>
+
+    <p class="eyebrow" id="owedLabel">Owed right now</p>
+    <p class="amount" id="owedAmount" aria-live="polite">$0</p>
+    <p class="status" id="owedStatus">Set the date you're counting from, down in Settings.</p>
+    <p class="next" id="nextLine"></p>
+
+    <div class="actions">
+      <button class="btn" id="payAll" type="button">Hand it over</button>
+      <button class="btn-ghost" id="toggleForm" type="button" aria-expanded="false" aria-controls="payform">Other amount</button>
+    </div>
+
+    <form class="payform" id="payform" hidden>
+      <div class="row">
+        <div class="field">
+          <label for="payAmount">Amount handed over</label>
+          <input type="number" id="payAmount" min="0" step="0.01" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="payDate">Date</label>
+          <input type="date" id="payDate">
+        </div>
+      </div>
+      <div class="quick" id="quickChips"></div>
+      <div class="actions">
+        <button class="btn" type="submit">Add to the book</button>
+        <button class="btn-ghost" type="button" id="cancelForm">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <dl class="totals">
+    <div><dt>Earned</dt><dd id="tEarned">$0</dd></div>
+    <div><dt>Paid</dt><dd id="tPaid">$0</dd></div>
+    <div><dt>Weeks</dt><dd id="tWeeks">0</dd></div>
+  </dl>
+
+  <section>
+    <div class="sec-head">
+      <h2>The weekly haul <span class="count" id="weekCount"></span></h2>
+      <button class="btn-mini" id="toggleWeeks" type="button" hidden>Show all</button>
+    </div>
+    <div class="weeks" id="weeks"></div>
+    <p class="empty" id="weeksEmpty" hidden>No coins in the haul yet — the first one drops on your allowance day.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Handed over <span class="count" id="payCount"></span></h2></div>
+    <ul class="hist" id="hist"></ul>
+    <p class="empty" id="histEmpty">Nothing handed over yet.</p>
+  </section>
+
+  <details class="settings" id="settings">
+    <summary>Settings</summary>
+    <div class="settings-body">
+      <div class="field">
+        <label for="setName">Whose book is this</label>
+        <input type="text" id="setName" placeholder="e.g. Leo" autocomplete="off" maxlength="40">
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="setAmount">Amount per week</label>
+          <input type="number" id="setAmount" min="0" step="0.01" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="setPayday">Allowance day</label>
+          <select id="setPayday">
+            <option value="0">Sunday</option><option value="1">Monday</option>
+            <option value="2">Tuesday</option><option value="3">Wednesday</option>
+            <option value="4">Thursday</option><option value="5">Friday</option>
+            <option value="6">Saturday</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="setStart">Counting from</label>
+        <input type="date" id="setStart">
+        <p class="hint">Backdate this to the last time he was really paid up — every allowance day since then gets counted.</p>
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="saveSettings">Save settings</button>
+      </div>
+      <div class="danger-zone">
+        <p class="hint">Clear every payment and start the book over.</p>
+        <button class="btn-mini is-danger" type="button" id="resetBtn">Scuttle the book</button>
+      </div>
+    </div>
+  </details>
+
+  <p class="foot"><span class="dot" id="syncDot"></span><span id="syncText">Saved on this device</span></p>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var LS_KEY = "me-money-v1";
+  var MS_DAY = 86400000;
+
+  /* ---------- dates: whole-day math, DST-proof ---------- */
+  function todayDate(){ var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function toISO(d){
+    var m = String(d.getMonth()+1).padStart(2,"0"), day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function parseISO(s){
+    var p = String(s||"").split("-").map(Number);
+    if(p.length !== 3 || !p[0] || isNaN(p[1]) || isNaN(p[2])) return todayDate();
+    return new Date(p[0], p[1]-1, p[2]);
+  }
+  function addDays(d,n){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()+n); }
+  function dayDiff(a,b){
+    return Math.round((Date.UTC(b.getFullYear(),b.getMonth(),b.getDate()) -
+                       Date.UTC(a.getFullYear(),a.getMonth(),a.getDate())) / MS_DAY);
+  }
+  function fmtShort(d){ return d.toLocaleDateString(undefined,{month:"short",day:"numeric"}); }
+  function fmtLong(d){ return d.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"}); }
+  function money(n){
+    var v = Math.round(n*100)/100, neg = v < 0; v = Math.abs(v);
+    var s = v % 1 === 0 ? String(v) : v.toFixed(2);
+    return (neg?"-$":"$") + s;
+  }
+  function plural(n,word){ return n + " " + word + (n === 1 ? "" : "s"); }
+
+  /* ---------- state ---------- */
+  var t = todayDate();
+  function defaults(){
+    return { name:"", weeklyAmount:5, payday:t.getDay(), startDate:toISO(t), payments:[] };
+  }
+  function normalize(raw){
+    var d = defaults();
+    if(!raw || typeof raw !== "object") return d;
+    var pay = Number(raw.payday);
+    var amt = Number(raw.weeklyAmount);
+    return {
+      name: typeof raw.name === "string" ? raw.name.slice(0,40) : "",
+      weeklyAmount: isFinite(amt) && amt >= 0 ? amt : d.weeklyAmount,
+      payday: pay >= 0 && pay <= 6 ? Math.floor(pay) : d.payday,
+      startDate: /^\d{4}-\d{2}-\d{2}$/.test(raw.startDate) ? raw.startDate : d.startDate,
+      payments: Array.isArray(raw.payments) ? raw.payments.filter(function(p){
+        return p && isFinite(Number(p.amount)) && /^\d{4}-\d{2}-\d{2}$/.test(p.date);
+      }).map(function(p){
+        return { id:String(p.id||Math.random().toString(36).slice(2)), date:p.date,
+                 amount:Math.round(Number(p.amount)*100)/100,
+                 note: typeof p.note === "string" ? p.note.slice(0,80) : "" };
+      }).slice(0,2000) : []
+    };
+  }
+
+  var state = defaults();
+  var docRef = null;
+  var showAllWeeks = false;
+  var lastOwed = null;
+
+  /* ---------- the arithmetic that answers the question ---------- */
+  function compute(){
+    var start = parseISO(state.startDate);
+    var offset = (state.payday - start.getDay() + 7) % 7;
+    var first = addDays(start, offset);
+    var elapsed = dayDiff(first, todayDate());
+    var weeks = elapsed < 0 ? 0 : Math.floor(elapsed/7) + 1;
+    var earned = Math.round(weeks * state.weeklyAmount * 100)/100;
+    var paid = Math.round(state.payments.reduce(function(s,p){ return s + p.amount; },0)*100)/100;
+    var owed = Math.round((earned - paid)*100)/100;
+    return {
+      first:first, weeks:weeks, earned:earned, paid:paid, owed:owed,
+      weeksOwed: state.weeklyAmount > 0 ? owed/state.weeklyAmount : 0,
+      next: addDays(first, weeks*7)
+    };
+  }
+
+  /* ---------- storage: this device always, shared when the viewer allows ---------- */
+  function saveLocal(){
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+  }
+  function loadLocal(){
+    try{
+      var raw = localStorage.getItem(LS_KEY);
+      if(raw) return normalize(JSON.parse(raw));
+    }catch(e){}
+    return null;
+  }
+  function commit(message){
+    saveLocal();
+    render();
+    if(docRef){
+      docRef.set(JSON.parse(JSON.stringify(state))).catch(function(err){
+        toast(err && err.code === "revoked" ? "Sharing ended — saved on this device"
+                                            : "Couldn't sync — saved on this device");
+      });
+    }
+    if(message) toast(message);
+  }
+
+  var toastTimer;
+  function toast(msg){
+    var el = document.getElementById("toast");
+    el.textContent = msg; el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ el.hidden = true; }, 2800);
+  }
+
+  /* ---------- render ---------- */
+  var $ = function(id){ return document.getElementById(id); };
+
+  function render(){
+    var c = compute();
+    var name = state.name.trim();
+
+    $("who").textContent = name
+      ? money(state.weeklyAmount) + " every " + DAYS[state.payday] + " for " + name
+      : money(state.weeklyAmount) + " every " + DAYS[state.payday];
+
+    var amtEl = $("owedAmount"), statusEl = $("owedStatus"), label = $("owedLabel");
+    if(c.owed > 0){
+      label.textContent = "Owed right now";
+      amtEl.textContent = money(c.owed);
+      amtEl.classList.remove("is-clear");
+      var w = c.weeksOwed;
+      var wTxt = Number.isInteger(w) ? plural(w,"week") : (Math.round(w*10)/10) + " weeks";
+      statusEl.innerHTML = "<b>" + wTxt + "</b> piled up and not handed over.";
+      $("payAll").hidden = false;
+      $("payAll").textContent = "Hand over " + money(c.owed);
+    } else if(c.owed === 0){
+      label.textContent = "Owed right now";
+      amtEl.textContent = money(0);
+      amtEl.classList.add("is-clear");
+      statusEl.innerHTML = "<b>All square.</b> The register's balanced.";
+      $("payAll").hidden = true;
+    } else {
+      label.textContent = "Paid ahead";
+      amtEl.textContent = money(-c.owed);
+      amtEl.classList.add("is-clear");
+      statusEl.innerHTML = "<b>" + money(-c.owed) + " ahead</b> — that covers the weeks still coming.";
+      $("payAll").hidden = true;
+    }
+
+    if(lastOwed !== null && lastOwed !== c.owed){
+      amtEl.classList.remove("pulse");
+      void amtEl.offsetWidth;
+      amtEl.classList.add("pulse");
+    }
+    lastOwed = c.owed;
+
+    var next = $("nextLine");
+    if(c.weeks === 0){
+      next.innerHTML = "First allowance day: <span class=\"rc\">" + fmtLong(c.first) + "</span>";
+    } else {
+      var inDays = dayDiff(todayDate(), c.next);
+      var when = inDays === 0 ? "today" : inDays === 1 ? "tomorrow" : "in " + plural(inDays,"day");
+      next.innerHTML = "Next " + money(state.weeklyAmount) + " lands <span class=\"rc\">" +
+                       when + "</span> · " + fmtLong(c.next);
+    }
+
+    $("tEarned").textContent = money(c.earned);
+    $("tPaid").textContent = money(c.paid);
+    $("tWeeks").textContent = String(c.weeks);
+
+    renderWeeks(c);
+    renderHistory();
+
+    if(document.activeElement !== $("setName")) $("setName").value = state.name;
+    if(document.activeElement !== $("setAmount")) $("setAmount").value = state.weeklyAmount;
+    if(document.activeElement !== $("setPayday")) $("setPayday").value = String(state.payday);
+    if(document.activeElement !== $("setStart")) $("setStart").value = state.startDate;
+
+    renderQuickChips(c);
+  }
+
+  function renderWeeks(c){
+    var grid = $("weeks"), toggle = $("toggleWeeks"), empty = $("weeksEmpty");
+    grid.textContent = "";
+    $("weekCount").textContent = c.weeks ? plural(c.weeks,"week") + " counted" : "";
+    empty.hidden = c.weeks !== 0;
+    if(c.weeks === 0){ toggle.hidden = true; return; }
+
+    var LIMIT = 12;
+    var from = (!showAllWeeks && c.weeks > LIMIT) ? c.weeks - LIMIT : 0;
+    toggle.hidden = c.weeks <= LIMIT;
+    toggle.textContent = showAllWeeks ? "Show recent" : "Show all " + c.weeks;
+
+    for(var i = from; i < c.weeks; i++){
+      var covered = Math.min(Math.max(c.paid - i*state.weeklyAmount, 0), state.weeklyAmount);
+      var cls, tag, shown;
+      if(state.weeklyAmount > 0 && covered >= state.weeklyAmount - 0.001){
+        cls = "paid"; tag = "Paid"; shown = money(state.weeklyAmount);
+      } else if(covered > 0){
+        cls = "part"; tag = "Part"; shown = money(state.weeklyAmount - covered);
+      } else {
+        cls = "owed"; tag = "Owed"; shown = money(state.weeklyAmount);
+      }
+      var d = addDays(c.first, i*7);
+      var cell = document.createElement("div");
+      cell.className = "wk " + cls;
+      var dEl = document.createElement("span"); dEl.className = "wk-date"; dEl.textContent = fmtShort(d);
+      var aEl = document.createElement("span"); aEl.className = "wk-amt"; aEl.textContent = shown;
+      var gEl = document.createElement("span"); gEl.className = "wk-tag"; gEl.textContent = tag;
+      cell.appendChild(dEl); cell.appendChild(aEl); cell.appendChild(gEl);
+      cell.title = fmtLong(d) + " — " + tag;
+      grid.appendChild(cell);
+    }
+  }
+
+  function renderHistory(){
+    var list = $("hist"), empty = $("histEmpty");
+    list.textContent = "";
+    var rows = state.payments.slice().sort(function(a,b){
+      return a.date === b.date ? 0 : (a.date < b.date ? 1 : -1);
+    });
+    $("payCount").textContent = rows.length ? plural(rows.length,"payment") : "";
+    empty.hidden = rows.length > 0;
+    list.hidden = rows.length === 0;
+
+    rows.forEach(function(p){
+      var li = document.createElement("li");
+      var d = document.createElement("span"); d.className = "h-date"; d.textContent = fmtShort(parseISO(p.date));
+      var a = document.createElement("span"); a.className = "h-amt"; a.textContent = money(p.amount);
+      var n = document.createElement("span"); n.className = "h-note"; n.textContent = p.note || "";
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "btn-mini"; btn.textContent = "Remove";
+      btn.setAttribute("aria-label", "Remove payment of " + money(p.amount) + " on " + fmtLong(parseISO(p.date)));
+      var armed = false, armTimer;
+      btn.addEventListener("click", function(){
+        if(!armed){
+          armed = true; btn.textContent = "Sure?"; btn.classList.add("is-danger");
+          armTimer = setTimeout(function(){
+            armed = false; btn.textContent = "Remove"; btn.classList.remove("is-danger");
+          }, 3500);
+          return;
+        }
+        clearTimeout(armTimer);
+        state.payments = state.payments.filter(function(x){ return x.id !== p.id; });
+        commit("Payment removed");
+      });
+      li.appendChild(d); li.appendChild(a); li.appendChild(n); li.appendChild(btn);
+      list.appendChild(li);
+    });
+  }
+
+  function renderQuickChips(c){
+    var box = $("quickChips");
+    box.textContent = "";
+    var opts = [];
+    if(state.weeklyAmount > 0){
+      opts.push({label:"1 week", value:state.weeklyAmount});
+      if(c.owed > state.weeklyAmount) opts.push({label:"2 weeks", value:state.weeklyAmount*2});
+    }
+    if(c.owed > 0) opts.push({label:"The lot · " + money(c.owed), value:c.owed});
+    opts.forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "btn-mini"; b.textContent = o.label;
+      b.addEventListener("click", function(){ $("payAmount").value = Math.round(o.value*100)/100; });
+      box.appendChild(b);
+    });
+  }
+
+  /* ---------- actions ---------- */
+  function addPayment(amount, date, note){
+    state.payments.push({
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      date: date, amount: Math.round(amount*100)/100, note: note || ""
+    });
+    commit("Cha-ching! " + money(amount) + " in the book");
+  }
+
+  $("payAll").addEventListener("click", function(){
+    var c = compute();
+    if(c.owed <= 0) return;
+    var weeks = state.weeklyAmount > 0 ? Math.round(c.owed/state.weeklyAmount*10)/10 : 0;
+    addPayment(c.owed, toISO(todayDate()), weeks ? "Covered " + weeks + (weeks === 1 ? " week" : " weeks") : "");
+  });
+
+  $("toggleForm").addEventListener("click", function(){
+    var f = $("payform"), open = f.hidden;
+    f.hidden = !open;
+    this.setAttribute("aria-expanded", String(open));
+    if(open){
+      var c = compute();
+      $("payDate").value = toISO(todayDate());
+      $("payAmount").value = c.owed > 0 ? Math.round(c.owed*100)/100 : state.weeklyAmount;
+      $("payAmount").focus();
+    }
+  });
+  $("cancelForm").addEventListener("click", function(){
+    $("payform").hidden = true;
+    $("toggleForm").setAttribute("aria-expanded","false");
+  });
+
+  $("payform").addEventListener("submit", function(e){
+    e.preventDefault();
+    var amt = Number($("payAmount").value);
+    var date = $("payDate").value;
+    if(!isFinite(amt) || amt <= 0){ toast("Enter an amount above $0"); return; }
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(date)) date = toISO(todayDate());
+    addPayment(amt, date, "");
+    this.hidden = true;
+    $("toggleForm").setAttribute("aria-expanded","false");
+  });
+
+  $("toggleWeeks").addEventListener("click", function(){ showAllWeeks = !showAllWeeks; render(); });
+
+  $("saveSettings").addEventListener("click", function(){
+    var amt = Number($("setAmount").value);
+    if(!isFinite(amt) || amt < 0){ toast("Enter an amount of $0 or more"); return; }
+    var start = $("setStart").value;
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(start)){ toast("Pick a date to count from"); return; }
+    state.name = $("setName").value.trim().slice(0,40);
+    state.weeklyAmount = Math.round(amt*100)/100;
+    state.payday = Number($("setPayday").value);
+    state.startDate = start;
+    commit("Settings saved");
+  });
+
+  (function(){
+    var btn = $("resetBtn"), armed = false, timer;
+    btn.addEventListener("click", function(){
+      if(!armed){
+        armed = true; btn.textContent = "Tap again to erase";
+        timer = setTimeout(function(){ armed = false; btn.textContent = "Scuttle the book"; }, 4000);
+        return;
+      }
+      clearTimeout(timer); armed = false; btn.textContent = "Scuttle the book";
+      state = defaults();
+      showAllWeeks = false;
+      commit("Book cleared");
+    });
+  })();
+
+  /* ---------- boot: render from this device, then light up sharing ---------- */
+  var local = loadLocal();
+  if(local) state = local;
+  render();
+
+  if(window.claude && typeof window.claude.use === "function"){
+    window.claude.use("db").then(function(db){
+      if(!db) return;
+      docRef = db.doc("ledger/main");
+      docRef.onSnapshot(function(snap){
+        if(snap.exists){
+          state = normalize(snap.data());
+          saveLocal();
+          render();
+          $("syncDot").className = "dot live";
+          $("syncText").textContent = "Shared — everyone with the link sees this book";
+        } else {
+          $("syncDot").className = "dot live";
+          $("syncText").textContent = "Shared — your first entry starts the book";
+        }
+      }, function(){
+        docRef = null;
+        $("syncDot").className = "dot";
+        $("syncText").textContent = "Saved on this device";
+      });
+    }).catch(function(){});
+  }
+
+  /* the owed figure depends on today's date — keep it honest overnight */
+  var lastDay = toISO(todayDate());
+  function recheck(){
+    var now = toISO(todayDate());
+    if(now !== lastDay){ lastDay = now; render(); }
+  }
+  setInterval(recheck, 60000);
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) recheck(); });
+})();
+</script>
