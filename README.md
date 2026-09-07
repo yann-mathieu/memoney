@@ -18,6 +18,13 @@ money you actually hand over.
 - **The weekly haul** — one chip per week: teal and stamped PAID, or gold and
   dashed for the weeks still owed.
 - Payments can be removed from the list if one gets entered by mistake.
+- **The local wildlife** — one of six sea creatures turns up each time the page
+  loads, and what they say depends on how far behind you are. Three weeks down
+  gets you a different reaction than an even book. *Who else is down here?*
+  fetches another one.
+
+The cast is original artwork drawn as inline SVG — no character images are
+fetched or bundled, so nothing here is anyone else's to license.
 
 ## The book lives in this repo
 
